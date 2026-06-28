@@ -1,29 +1,25 @@
 from flask import Flask, request, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from werkzeug.security import generate_password_hash, check_password_hash
-import secrets
+from flask_jwt_extended import JWTManager, create_access_token, jwt_required, get_jwt_identity, get_jwt
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+app.config['JWT_SECRET_KEY'] = 'rahasia-tri-polinela-2026'
 
 db = SQLAlchemy(app)
+jwt = JWTManager(app)
 
 # ==========================================
 # CHECKPOINT 1: MODEL DATABASE & RELASI ROLE
 # ==========================================
 # TODO: Inspeksi file database.db yang diberikan.
 # Definisikan class model User, Poll, dan Vote di bawah ini.
-# PERHATIAN: Perhatikan tipe data untuk status polling dan role pengguna di database bawaan (bukan boolean)!
+# PERHATIAN: Perhatikan baik-baik tipe data dan nama kolom untuk status polling, 
+# role pengguna, dan kolom platform di database bawaan! 
 
 # <TULIS MODEL DI SINI>
-
-# Fungsi Helper
-def get_current_user():
-    token = request.headers.get('Authorization')
-    if not token:
-        return None
-    return User.query.filter_by(token=token).first()
 
 # ==========================================
 # CHECKPOINT 2: AUTH & ENDPOINT KHUSUS ADMIN

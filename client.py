@@ -10,7 +10,7 @@ STATE = {
 
 def get_headers():
     if STATE['token']:
-        return {'Authorization': STATE['token']}
+        return {'Authorization': f"Bearer {STATE['token']}"}
     return {}
 
 # ==========================================
@@ -25,6 +25,7 @@ def login():
 
 def view_polls():
     print("\n--- DAFTAR POLLING ---")
+    
     raise NotImplementedError("[Checkpoint-5] Request API untuk Lihat Polling belum diimplementasikan")
 
 def create_poll():
@@ -53,21 +54,26 @@ def vote():
 # ==========================================
 def main():
     while True:
-        if not STATE['token']:
-            print("\n=== E-POLLING SYSTEM ===")
-            print("1. Login")
-            print("2. Keluar")
-            pilihan = input("Pilih menu: ")
-            
-            if pilihan == '1':
-                login()
-            elif pilihan == '2':
-                print("Keluar dari aplikasi.")
-                sys.exit()
+        try:
+            if not STATE['token']:
+                print("\n=== E-POLLING SYSTEM ===")
+                print("1. Login")
+                print("2. Keluar")
+                pilihan = input("Pilih menu: ")
+                
+                if pilihan == '1':
+                    login()
+                elif pilihan == '2':
+                    print("Keluar dari aplikasi.")
+                    sys.exit()
+                else:
+                    print("Pilihan tidak valid.")
             else:
-                print("Pilihan tidak valid.")
-        else:
-            raise NotImplementedError("[Checkpoint-4] Percabangan menu CLI belum dibuat")
+                raise NotImplementedError("[Checkpoint-4] Percabangan menu CLI belum dibuat")
+                
+        except NotImplementedError as e:
+            print(f"\n[!] FITUR BELUM SELESAI: {e}")
+            print("    Silakan lengkapi kode pada fungsi tersebut agar fitur ini dapat berjalan.")
 
 if __name__ == '__main__':
     main()
